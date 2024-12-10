@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="modify-column-type.xml" author="sv">
+
+        <modifyDataType tableName="customer-test" columnName="cart_id" newDataType="bigint"/>
+
+    </changeSet>
+
+    <changeSet id="rename-column-cart-id" author="sv">
+        <renameColumn tableName="customer-test" oldColumnName="cart_id" newColumnName="c_id"/>
+<!--        columnDataType=""-->
+
+    </changeSet>
+
+</databaseChangeLog>

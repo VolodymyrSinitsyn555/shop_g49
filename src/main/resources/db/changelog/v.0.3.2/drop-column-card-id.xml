@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+
+    <changeSet id="drop-column-cart-id" author="SergeyB">
+        <dropColumn tableName="customer-test" columnName="c_id"/>
+    </changeSet>
+
+    <!--    <changeSet id="1733844348590-1" author="sv">-->
+<!--        <addNotNullConstraint tableName="customer-test" columnName="c_id"/>-->
+<!--    </changeSet>-->
+<!--    -->
+<!--    <changeSet id="1733844417991-1" author="sv">-->
+<!--        <dropNotNullConstraint tableName="customer-test" columnName="c_id"/>-->
+<!--    </changeSet>-->
+
+</databaseChangeLog>
