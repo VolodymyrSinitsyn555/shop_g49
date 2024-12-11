@@ -1,4 +1,4 @@
-package ait.cohort49.shop.service;
+package ait.cohort49.shop.service.interfaces;
 
 import ait.cohort49.shop.model.entity.Customer;
 import ait.cohort49.shop.model.entity.Product;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CustomerService {
 
-    void saveCustomer(Customer customer);
+    Customer saveCustomer(Customer customer);
 
     List<Customer> getAllActiveCustomers();
 

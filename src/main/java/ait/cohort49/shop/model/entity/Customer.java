@@ -1,11 +1,22 @@
 package ait.cohort49.shop.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
+@Table(name = "customer")
 public class Customer {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column (name = "customer_name")
+    @JsonProperty("customer_name")
     private String name;
+    @Column
     private boolean active;
 
     @Override

@@ -1,44 +1,88 @@
 package ait.cohort49.shop.controller;
 
 import ait.cohort49.shop.model.entity.Product;
+import ait.cohort49.shop.service.interfaces.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
+
+
+// http://localhost:8080/products
+
+// /login - фронт endpoint
+// /api/login
+// /api/products
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
+
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    // Create: POST -> /products
     @PostMapping
     public Product saveProduct(@RequestBody Product product) {
-        return product;
+        return productService.saveProduct(product);
     }
 
-//    @GetMapping
-//    public Product getProductById(@RequestParam Long id) {
-//        return null;
-//    }
-
-    @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
-        return null;
+    // Получение ресурса
+    // GET /products/5
+    // GET /products/1565
+    // GET /products/55
+    @GetMapping("/{productId}")
+    public Product getById(@PathVariable("productId") Long id) {
+        return productService.getProductById(id);
     }
 
+    // get:  GET /products
     @GetMapping
-    public List<Product> getAllProducts() {
-        return List.of();
+    public List<Product> getAll() {
+        return productService.getAllActiveProducts();
     }
 
-
-    // 1. параметр id продукта что хотим обновить 2. параметр - то что мы хотим изменить( новые праметры продукта)
+    // Update: PUT -> /products/5
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        return product;
+    public Product update(@PathVariable Long id, @RequestBody Product product){
+        return productService.updateProduct(id, product);
     }
 
+    // Delete: DELETE -> /products/3
     @DeleteMapping("/{id}")
     public Product remove(@PathVariable Long id) {
-        return null;
+        return productService.deleteProduct(id);
     }
 
+    // Delete: DELETE -> /products/by-title?title=Banana
+    @DeleteMapping("/by-title")
+    public Product deleteProductByTitle(@RequestParam String title) {
+        return productService.deleteProductByTitle(title);
+    }
+
+    // PUT -> /products/restore/25
+    @PutMapping("/restore/{id}")
+    public Product restoreProductById(@PathVariable Long id) {
+        return productService.restoreProductById(id);
+    }
+
+    @GetMapping("/count")
+    public long getProductsCount() {
+        return productService.getProductsCount();
+    }
+
+    @GetMapping("/total-price")
+    public BigDecimal getTotalPrice() {
+        return productService.getTotalPrice();
+    }
+
+    @GetMapping("/average-price")
+    public BigDecimal getAveragePrice() {
+        return productService.getAveragePrice();
+    }
 }

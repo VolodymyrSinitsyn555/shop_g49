@@ -2,28 +2,43 @@ package ait.cohort49.shop.service;
 
 import ait.cohort49.shop.model.entity.Customer;
 import ait.cohort49.shop.model.entity.Product;
+import ait.cohort49.shop.repository.CustomerRepository;
+import ait.cohort49.shop.repository.ProductRepository;
+import ait.cohort49.shop.service.interfaces.CustomerService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
 
+    private final CustomerRepository repository;
+
+    public CustomerServiceImpl(CustomerRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
-    public void saveCustomer(Customer customer) {
-
+    public Customer saveCustomer(Customer customer) {
+        customer.setActive(true);
+        return repository.save(customer);
     }
 
     @Override
     public List<Customer> getAllActiveCustomers() {
-        return List.of();
+        return repository.findAll().stream()
+                .filter(Customer::isActive)
+                .toList();
     }
 
     @Override
-    public Customer getActiveCustomerById(Long customerId) {
+    public Customer getActiveCustomerById(Long id) {
+        Customer customer = repository.findById(id).orElse(null);
+        if (customer == null || !customer.isActive()) {
         return null;
+        }
+        return customer;
     }
 
     @Override

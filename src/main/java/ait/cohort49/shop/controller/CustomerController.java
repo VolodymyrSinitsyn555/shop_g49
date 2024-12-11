@@ -2,8 +2,7 @@ package ait.cohort49.shop.controller;
 
 import ait.cohort49.shop.model.entity.Customer;
 import ait.cohort49.shop.model.entity.Product;
-import ait.cohort49.shop.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import ait.cohort49.shop.service.interfaces.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -15,14 +14,15 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    @Autowired
+
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
     @PostMapping
-    public void saveCustomer(@RequestBody Customer customer) {
+    public Customer saveCustomer(@RequestBody Customer customer) {
         customerService.saveCustomer(customer);
+        return customer;
     }
 
     @GetMapping("/active")
