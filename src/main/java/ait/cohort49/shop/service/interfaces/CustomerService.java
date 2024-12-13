@@ -1,26 +1,27 @@
 package ait.cohort49.shop.service.interfaces;
 
+import ait.cohort49.shop.model.dto.CustomerDTO;
 import ait.cohort49.shop.model.entity.Customer;
 import ait.cohort49.shop.model.entity.Product;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface CustomerService {
+public interface CustomerService  {
 
-    Customer saveCustomer(Customer customer);
+    CustomerDTO saveCustomer(CustomerDTO customer);
 
-    List<Customer> getAllActiveCustomers();
+    List<CustomerDTO> getAllActiveCustomers();
 
-    Customer getActiveCustomerById(Long customerId);
+    CustomerDTO getActiveCustomerById(Long customerId);
 
-    Customer updateCustomerById(Long customerId, Customer updatedCustomer);
+    CustomerDTO updateCustomerById(Long customerId, CustomerDTO updatedCustomer);
 
-    Customer deleteCustomerById(Long customerId);
+    CustomerDTO deleteCustomerById(Long customerId);
 
-    Customer deleteCustomerByName(String customerName);
+    CustomerDTO deleteCustomerByName(String customerName);
 
-    Customer restoreCustomerById(Long customerId);
+    CustomerDTO restoreCustomerById(Long customerId);
 
     int getActiveCustomerCount();
 

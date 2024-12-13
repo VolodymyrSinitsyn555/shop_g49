@@ -1,5 +1,6 @@
 package ait.cohort49.shop.controller;
 
+import ait.cohort49.shop.model.dto.CustomerDTO;
 import ait.cohort49.shop.model.entity.Customer;
 import ait.cohort49.shop.model.entity.Product;
 import ait.cohort49.shop.service.interfaces.CustomerService;
@@ -20,38 +21,40 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Customer saveCustomer(@RequestBody Customer customer) {
-        customerService.saveCustomer(customer);
-        return customer;
+    public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDto) {
+//        logger.info("Received request to save customer: {}", customerDto);
+        customerService.saveCustomer(customerDto);
+//        logger.info("Customer saved successfully: {}", savedCustomer);
+        return customerDto;
     }
 
     @GetMapping("/active")
-    public List<Customer> getAllActiveCustomers() {
+    public List<CustomerDTO> getAllActiveCustomers() {
         return customerService.getAllActiveCustomers();
     }
 
     @GetMapping("/{customerId}")
-    public Customer getActiveCustomerById(@PathVariable Long customerId) {
+    public CustomerDTO getActiveCustomerById(@PathVariable Long customerId) {
         return customerService.getActiveCustomerById(customerId);
     }
 
     @PutMapping("/{customerId}")
-    public Customer updateCustomerById(@PathVariable Long customerId, @RequestBody Customer updatedCustomer) {
-        return customerService.updateCustomerById(customerId, updatedCustomer);
+    public CustomerDTO updateCustomerById(@PathVariable Long customerId, @RequestBody CustomerDTO updatedCustomerDto) {
+        return customerService.updateCustomerById(customerId, updatedCustomerDto);
     }
 
     @DeleteMapping("/{customerId}")
-    public Customer deleteCustomerById(@PathVariable Long customerId) {
+    public CustomerDTO deleteCustomerById(@PathVariable Long customerId) {
         return customerService.deleteCustomerById(customerId);
     }
 
     @DeleteMapping("/name/{customerName}")
-    public Customer deleteCustomerByName(@PathVariable String customerName) {
+    public CustomerDTO deleteCustomerByName(@PathVariable String customerName) {
         return customerService.deleteCustomerByName(customerName);
     }
 
     @PatchMapping("/restore/{customerId}")
-    public Customer restoreCustomerById(@PathVariable Long customerId) {
+    public CustomerDTO restoreCustomerById(@PathVariable Long customerId) {
         return customerService.restoreCustomerById(customerId);
     }
 

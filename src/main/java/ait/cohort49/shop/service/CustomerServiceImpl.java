@@ -1,10 +1,12 @@
 package ait.cohort49.shop.service;
 
+import ait.cohort49.shop.model.dto.CustomerDTO;
+import ait.cohort49.shop.model.entity.Cart;
 import ait.cohort49.shop.model.entity.Customer;
 import ait.cohort49.shop.model.entity.Product;
 import ait.cohort49.shop.repository.CustomerRepository;
-import ait.cohort49.shop.repository.ProductRepository;
 import ait.cohort49.shop.service.interfaces.CustomerService;
+import ait.cohort49.shop.service.mapping.CustomerMappingService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,50 +16,60 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository repository;
+    private final CustomerMappingService mappingService;
 
-    public CustomerServiceImpl(CustomerRepository repository) {
+    public CustomerServiceImpl(CustomerRepository repository, CustomerMappingService mappingService) {
         this.repository = repository;
+        this.mappingService = mappingService;
     }
 
     @Override
-    public Customer saveCustomer(Customer customer) {
+    public CustomerDTO saveCustomer(CustomerDTO customerDto) {
+
+
+        Customer customer = mappingService.mapDtoToEntity(customerDto);
         customer.setActive(true);
-        return repository.save(customer);
+        CustomerDTO dto = mappingService.mapEntityToDto(repository.save(customer));
+
+
+
+        return dto;
     }
 
     @Override
-    public List<Customer> getAllActiveCustomers() {
+    public List<CustomerDTO> getAllActiveCustomers() {
         return repository.findAll().stream()
                 .filter(Customer::isActive)
+                .map(mappingService::mapEntityToDto)
                 .toList();
     }
 
     @Override
-    public Customer getActiveCustomerById(Long id) {
+    public CustomerDTO getActiveCustomerById(Long id) {
         Customer customer = repository.findById(id).orElse(null);
         if (customer == null || !customer.isActive()) {
         return null;
         }
-        return customer;
+        return mappingService.mapEntityToDto(customer);
     }
 
     @Override
-    public Customer updateCustomerById(Long customerId, Customer updatedCustomer) {
+    public CustomerDTO updateCustomerById(Long customerId, CustomerDTO updatedCustomer) {
         return null;
     }
 
     @Override
-    public Customer deleteCustomerById(Long customerId) {
+    public CustomerDTO deleteCustomerById(Long customerId) {
         return null;
     }
 
     @Override
-    public Customer deleteCustomerByName(String customerName) {
+    public CustomerDTO deleteCustomerByName(String customerName) {
         return null;
     }
 
     @Override
-    public Customer restoreCustomerById(Long customerId) {
+    public CustomerDTO restoreCustomerById(Long customerId) {
         return null;
     }
 

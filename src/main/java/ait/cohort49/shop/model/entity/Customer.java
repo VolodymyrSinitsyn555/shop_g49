@@ -12,6 +12,7 @@ public class Customer {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private Long id;
     @Column (name = "customer_name")
     @JsonProperty("customer_name")
@@ -19,9 +20,20 @@ public class Customer {
     @Column
     private boolean active;
 
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST)
+    private Cart cart;
+
     @Override
     public String toString() {
         return String.format("Customer: id - %d, name - %s, active - %s", id, name, active ? "yes" : "no");
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Long getId() {
