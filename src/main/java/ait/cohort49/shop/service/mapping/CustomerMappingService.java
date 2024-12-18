@@ -14,5 +14,6 @@ public interface CustomerMappingService {
     Customer mapDtoToEntity(CustomerDTO dto);
 
     @Mapping(source = "name", target = "customer_name")
+    @Mapping(source = "cart", target = "cart")
     CustomerDTO mapEntityToDto(Customer entity);
 }

@@ -1,7 +1,6 @@
 package ait.cohort49.shop.controller;
 
 import ait.cohort49.shop.model.dto.ProductDTO;
-import ait.cohort49.shop.model.entity.Product;
 import ait.cohort49.shop.service.interfaces.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -10,18 +9,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 
-// http://localhost:8080/products
-
-// /login - фронт endpoint
-// /api/login
-// /api/products
 
 @RestController
 @RequestMapping("/products")

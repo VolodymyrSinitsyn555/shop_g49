@@ -1,5 +1,6 @@
 package ait.cohort49.shop.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -18,6 +19,14 @@ public class Cart {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -25,11 +34,6 @@ public class Cart {
     public Long getId() {
         return id;
 
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Cart: id - %d", this.id);
     }
 
     @Override

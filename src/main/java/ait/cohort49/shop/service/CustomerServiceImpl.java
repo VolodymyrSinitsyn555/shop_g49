@@ -8,6 +8,7 @@ import ait.cohort49.shop.repository.CustomerRepository;
 import ait.cohort49.shop.service.interfaces.CustomerService;
 import ait.cohort49.shop.service.mapping.CustomerMappingService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,16 +25,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public CustomerDTO saveCustomer(CustomerDTO customerDto) {
-
-
         Customer customer = mappingService.mapDtoToEntity(customerDto);
         customer.setActive(true);
-        CustomerDTO dto = mappingService.mapEntityToDto(repository.save(customer));
 
+        Cart cart = new Cart();
+        cart.setCustomer(customer);
+        customer.setCart(cart);
 
+        return mappingService.mapEntityToDto(repository.save(customer));
 
-        return dto;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO getActiveCustomerById(Long id) {
         Customer customer = repository.findById(id).orElse(null);
         if (customer == null || !customer.isActive()) {
-        return null;
+            return null;
         }
         return mappingService.mapEntityToDto(customer);
     }
@@ -60,6 +62,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO deleteCustomerById(Long customerId) {
+        repository.deleteById(customerId);
         return null;
     }
 
@@ -97,9 +100,12 @@ public class CustomerServiceImpl implements CustomerService {
     public void removeProductFromCart(Long customerId, Long productId) {
 
     }
-
     @Override
     public void clearCart(Long customerId) {
+    }
 
+    @Transactional
+    public void deleteCustomersInRange(Long startId, Long endId) {
+        repository.deleteByIdBetween(startId, endId);
     }
 }

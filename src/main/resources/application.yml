@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/shop_g49
     username: my_user
-    password: pos1234
+    password: ${DB_PASS}
     driver-class-name: org.postgresql.Driver
 
   application:
@@ -11,6 +11,20 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
 
+  jpa:
+    properties:
+      hibernate:
+        auto_quote_keyword: true
+
+
 server:
    servlet:
      context-path: /api
+
+key:
+  access: ${KEY_ACCESS}
+  refresh: ${KEY_REFRESH}
+
+#banPE+RUd4GUYCnkmrRLeBgYKIfQyr4MH6fI6VsZXPo=
+#ycNn6doGLLMZiSTSp4GrFngjYoKKHcBmp3/JjSZKJyk=
+

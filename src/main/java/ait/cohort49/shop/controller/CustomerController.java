@@ -4,6 +4,7 @@ import ait.cohort49.shop.model.dto.CustomerDTO;
 import ait.cohort49.shop.model.entity.Customer;
 import ait.cohort49.shop.model.entity.Product;
 import ait.cohort49.shop.service.interfaces.CustomerService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -22,10 +23,7 @@ public class CustomerController {
 
     @PostMapping
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDto) {
-//        logger.info("Received request to save customer: {}", customerDto);
-        customerService.saveCustomer(customerDto);
-//        logger.info("Customer saved successfully: {}", savedCustomer);
-        return customerDto;
+        return customerService.saveCustomer(customerDto);
     }
 
     @GetMapping("/active")
@@ -86,5 +84,13 @@ public class CustomerController {
     @DeleteMapping("/{customerId}/cart/clear")
     public void clearCart(@PathVariable Long customerId) {
         customerService.clearCart(customerId);
+    }
+
+    @DeleteMapping("/delete-range")
+    public ResponseEntity<String> deleteCustomersInRange(
+            @RequestParam Long startId,
+            @RequestParam Long endId) {
+        customerService.deleteCustomersInRange(startId, endId);
+        return ResponseEntity.ok("Customers deleted successfully from ID " + startId + " to " + endId);
     }
 }

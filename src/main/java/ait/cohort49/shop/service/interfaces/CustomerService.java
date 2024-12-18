@@ -34,4 +34,6 @@ public interface CustomerService  {
     void removeProductFromCart(Long customerId, Long productId);
 
     void clearCart(Long customerId);
+
+    void deleteCustomersInRange(Long startId, Long endId);
 }

@@ -1,8 +1,13 @@
 package ait.cohort49.shop.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,13 +25,14 @@ public class Customer {
     @Column
     private boolean active;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cart cart;
 
     @Override
     public String toString() {
         return String.format("Customer: id - %d, name - %s, active - %s", id, name, active ? "yes" : "no");
     }
+
 
     public Cart getCart() {
         return cart;
@@ -60,11 +66,12 @@ public class Customer {
         this.active = active;
     }
 
+
     @Override
     public final boolean equals(Object o) {
         if (!(o instanceof Customer customer)) return false;
 
-        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(name, customer.name);
+        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(cart, customer.cart);
     }
 
     @Override
@@ -72,6 +79,9 @@ public class Customer {
         int result = Objects.hashCode(id);
         result = 31 * result + Objects.hashCode(name);
         result = 31 * result + Boolean.hashCode(active);
+        result = 31 * result + Objects.hashCode(cart);
         return result;
     }
+
+
 }

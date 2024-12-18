@@ -1,5 +1,6 @@
 package ait.cohort49.shop.model.dto;
 
+import ait.cohort49.shop.model.entity.Cart;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -11,9 +12,19 @@ public class CustomerDTO {
 
     private String customer_name;
 
+    private Cart cart;
+
     @Override
     public String toString() {
         return String.format("Customer: id - %d, name - %s", id, customer_name);
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Long getId() {
